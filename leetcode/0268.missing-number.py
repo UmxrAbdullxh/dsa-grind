@@ -1,10 +1,10 @@
 class Solution:
     def missingNumber(self, nums: List[int]) -> int:
-        nums.sort()
-        if (len(nums) == 1 and nums[0] != 0) or nums[0] != 0:
-            return 0
-        for i in range(0, len(nums) - 1):
-            if (nums[i] + 1) != nums[i+1]:
-                return nums[i] + 1
-        return nums[-1] + 1
-        
+        xor1 = 0
+        xor2 = 0
+        for i in range(len(nums)+1):
+            xor1 = xor1 ^ i
+        for i in range(len(nums)):
+            xor2 = xor2 ^ nums[i]
+        return xor1 ^ xor2
+              
