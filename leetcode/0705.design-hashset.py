@@ -1,22 +1,20 @@
 class MyHashSet:
-    # Naive solution
+    """
+    Optimized HashSet using direct addressing.
+    Supports keys in the range [0, 10^6].
+    All operations run in O(1) time.
+    """
     def __init__(self):
-        self.hashSet = []        
+        self._present = [False] * (10**6 + 1)
 
     def add(self, key: int) -> None:
-        if not self.contains(key):
-            self.hashSet.append(key)
-        
+        self._present[key] = True
 
     def remove(self, key: int) -> None:
-        if self.contains(key):
-            self.hashSet.remove(key)
+        self._present[key] = False
 
     def contains(self, key: int) -> bool:
-        for i in self.hashSet:
-            if i == key:
-                return True
-        return False
+        return self._present[key]
         
 
 
