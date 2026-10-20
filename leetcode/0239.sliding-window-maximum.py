@@ -1,23 +1,23 @@
 class Solution:
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
-        window = {}
+        q = deque()
         res = []
-        maxV = float('-inf')
-        for i in range(len(nums)):
-            c = nums[i]
-            window[c] = 1 + window.get(c, 0)
-            maxV = max(maxV, c)
-            if i + 1 >= k:
-                res.append(maxV)
-                start = (i + 1) - k
-                window[nums[start]] -= 1
-                if window[nums[start]] == 0:
-                    del window[nums[start]]
-                if nums[start] == maxV:
-                    if len(window) > 0:
-                        tmpMax = max(window.keys())
-                        maxV = tmpMax
-                    else:
-                        maxV = float('-inf')
+
+        for i, x in enumerate(nums):
+            # kick out of window is out of window range
+            if q and q[0][0] <= i - k:
+                q.popleft()
+
+            # add validation while adding if greater than right side of queue
+            while q and q[-1][1] < x:
+                q.pop()
+
+            # add to q
+            q.append((i, x))
+
+            # add to res if i >=k
+            if i >=k-1 :
+                res.append(q[0][1])
+
+
         return res
-        
